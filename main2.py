@@ -11,6 +11,7 @@ class TicTacToe:
         self.gameOver = False
         self.counter = 0
 
+    
     def host_game(self, host, port):
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # set tpc connection
         server.bind((host,port))
@@ -26,7 +27,7 @@ class TicTacToe:
     def connect_to_game(self, host, port):
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client.connect((host, port))
-        print(f"Connected to {host} via port {port}")
+        print(f"Connected to {host} via port {port}")   
         self.you = "O"
         self.opponent = "X"
         threading.Thread(target=self.handle_connection, args=(client,)).start()
@@ -55,7 +56,6 @@ class TicTacToe:
     
     def apply_move(self, move, player):
         if self.gameOver:
-            print("gameover!")
             return
         self.counter +=1
         self.board[move[0]][move[1]] = player
@@ -93,4 +93,4 @@ class TicTacToe:
             print(f" {self.board[row][0]} | {self.board[row][1]} | {self.board[row][2]} ")
 
 game = TicTacToe()
-game.host_game("localhost", 9999)
+game.connect_to_game("localhost", 9999)
